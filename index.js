@@ -8,13 +8,18 @@ const request = require('request');
 const PORT = process.env.PORT || 5000;
 
 
+
 // API KEY pk_48ed691da2664891a33c171019d0bcb
-request('https://cloud.iexapis.com/stable/stock/fb/quote?token=pk_48ed691da2664891a33c171019d0bcb', { json: true}, (err, res, body) => { 
+// create call_api function
+function call_api(finishedAPI) {
+	request('https://cloud.iexapis.com/stable/stock/fb/quote?token=pk_48ed691da2664891a33c171019d0bcb', { json: true }, (err, res, body) => { 
 	if (err) {return console.log(err);}
 	if (res.statusCode === 200){
-		console.log(body);		
-	};
-});
+		// console.log(body);		
+		finishedAPI(body);
+		};
+	});
+};
 
 
 
@@ -26,10 +31,13 @@ const otherstuff = "hello there, this is other stuff!";
 
 // Set handlebar routes
 app.get('/', function (req, res) {
-	res.render('home', {
-		stuff: otherstuff
+	call_api(function(doneAPI) {
+			res.render('home', {
+			stock: doneAPI
+		});
 	});
-})
+	
+});
 
 // create about page route
 app.get('/about.html', function (req, res) {
