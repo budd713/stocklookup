@@ -1,4 +1,4 @@
-# studious-octo-dollop
+# Web-based Stock Lookup Tool
 
 ## About
 This application is my first experience building a website with Node.js and Express-Handlebars. 
